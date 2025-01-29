@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edytuj Podróż</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Edytuj Podróż</h1>
+    <form method="POST">
+        <label for="departure_time">Data i godzina wypłynięcia:</label>
+        <input type="datetime-local" id="departure_time" name="departure_time" 
+               value="{{ journey.departure_time|replace(' ', 'T') if journey.departure_time else '' }}"><br>
+    
+        <label for="arrival_time">Data i godzina przybycia:</label>
+        <input type="datetime-local" id="arrival_time" name="arrival_time" 
+               value="{{ journey.arrival_time|replace(' ', 'T') if journey.arrival_time else '' }}"><br>
+    
+        <label for="departure_port">Port początkowy:</label>
+        <input type="text" id="departure_port" name="departure_port" 
+               value="{{ journey.departure_port if journey.departure_port else '' }}"><br>
+    
+        <label for="arrival_port">Port końcowy:</label>
+        <input type="text" id="arrival_port" name="arrival_port" 
+               value="{{ journey.arrival_port if journey.arrival_port else '' }}"><br>
+    
+        <label for="weather">Warunki pogodowe:</label>
+        <input type="text" id="weather" name="weather" 
+               value="{{ journey.weather if journey.weather else '' }}"><br>
+    
+        <input type="submit" value="Zapisz">
+    </form>
+    <a href="/">Powrót do listy rejsów</a>
+</body>
+</html>

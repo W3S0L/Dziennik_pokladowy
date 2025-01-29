@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Logowanie</title>
+</head>
+<body>
+    <h1>Zaloguj się</h1>
+    <form method="POST">
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="username" name="username"><br>
+
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" name="password"><br>
+
+        <input type="submit" value="Zaloguj">
+    </form>
+    <p>Nie masz konta? <a href="{{ url_for('register') }}">Zarejestruj się tutaj</a></p>
+</body>
+</html>

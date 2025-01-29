@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dziennik Pokładowy</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Dziennik Pokładowy</h1>
+    <h3 style="text-align: right">
+    {% if current_user.is_authenticated %}
+        <p>Zalogowany jako: {{ current_user.username }}</p>
+        <a href="{{ url_for('logout') }}">Wyloguj</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Zaloguj</a>
+    {% endif %}</h3>
+    <h2>Lista rejsów</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Godzina wypłynięcia</th>
+                <th>Godzina dotarcia</th>
+                <th>Port początkowy</th>
+                <th>Port końcowy</th>
+                <th>Warunki pogodowe</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for idx in range(journeys|length) %}
+                {% set journey = journeys[idx] %}
+                <tr>
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ journey.departure_time }}</td>
+                    <td>{{ journey.arrival_time }}</td>
+                    <td>{{ journey.departure_port }}</td>
+                    <td>{{ journey.arrival_port }}</td>
+                    <td>{{ journey.weather }}</td>
+                    <td>
+                        <a href="{{ url_for('report', journey_id=journey['_id']) }}">Zobacz raport</a>
+                        <a href="{{ url_for('edit_passengers', journey_id=journey['_id']) }}">Lista pasażerów</a>
+                        <a href="{{ url_for('checklist', journey_id=journey['_id']) }}">Lista kontrolna</a>
+                        <a href="{{ url_for('edit_journey', journey_id=journey._id) }}">Edytuj</a>
+                        {% if current_user.is_admin %}
+                                <form method="POST" class="button" action="{{ url_for('delete_journey', journey_id=journey['_id']) }}" style="display:inline;" >
+                                <button type="submit" class="button delete" onclick="return confirm('Czy na pewno chcesz usunąć ten rejs?')">Usuń</button>
+                                </form>
+                            {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{{ url_for('add_journey') }}">Dodaj nowy rejs</a>
+</body>
+</html>

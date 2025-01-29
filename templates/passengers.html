@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasażerowie</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Lista Pasażerów</h1>
+    <form method="POST">
+        <label>Imię i nazwisko: <input type="text" name="name" required></label><br>
+        <label>Wiek: <input type="number" name="age" required></label><br>
+        <input type="submit" value="Dodaj pasażera">
+    </form>
+    <h2>Aktualna lista:</h2>
+    <ul>
+        {% for passenger in passengers %}
+        <li>{{ passenger.name }} - {{ passenger.age }} lat</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Powrót do listy rejsów</a>
+</body>
+</html>

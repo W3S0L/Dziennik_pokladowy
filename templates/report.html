@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raport Rejsu</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="report-container">
+        <h1>Raport Rejsu</h1>
+        <h2>Szczegóły rejsu</h2>
+        <p><strong>Data i godzina wypłynięcia:</strong> {{ journey.departure_time }}</p>
+        <p><strong>Data i godzina przybycia:</strong> {{ journey.arrival_time }}</p>
+        <p><strong>Port początkowy:</strong> {{ journey.departure_port }}</p>
+        <p><strong>Port końcowy:</strong> {{ journey.arrival_port }}</p>
+        <p><strong>Warunki pogodowe:</strong> {{ journey.weather }}</p>
+    
+        <h3>Utworzone przez:</h3>
+        {% if creator %}
+            <p>Imię: {{ creator.first_name }}</p>
+            <p>Nazwisko: {{ creator.last_name }}</p>
+            <p>Nazwa użytkownika: {{ creator.username }}</p>
+        {% else %}
+            <p>Brak danych o twórcy.</p>
+        {% endif %}
+    
+        <h2>Lista pasażerów</h2>
+        <p class="passenger-summary"><strong>Liczba dzieci:</strong> {{ children }}</p>
+        <p class="passenger-summary"><strong>Liczba dorosłych:</strong> {{ adults }}</p>
+        <h3>Lista:</h3>
+        <ul>
+            {% for passenger in journey.passengers %}
+            <li>{{ passenger.name }} - {{ passenger.age }} lat</li>
+            {% else %}
+            <li>Brak pasażerów</li>
+            {% endfor %}
+        </ul>
+    
+        <h2>Stan techniczny łodzi</h2>
+        <p><strong>Czy sprawdzono:</strong></p>
+        <ul class="checklist">
+            {% for item in journey.checklist %}
+            <li>
+                {{ item.item }}: {{ "Tak" if item.status else "Nie" }}
+            </li>
+            {% else %}
+            <li>Brak elementów w checkliście</li>
+            {% endfor %}
+        </ul>
+    
+        <h2>Notatki</h2>
+        <ul class="notes">
+            {% for note in journey.notes %}
+            <li>
+                <p>{{ note.content }}</p>
+                <p style="text-align: right"><small><em>Dodano: {{ note.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</em></small></p>
+            </li>
+            {% else %}
+            <li>Brak notatek</li>
+            {% endfor %}
+        </ul>
+        <form method="POST" class="add-note-form">
+            <textarea name="note" placeholder="Dodaj nową notatkę..." required></textarea>
+            <button type="submit">Dodaj notatkę</button>
+        </form>
+    
+        <a href="/">Powrót do listy rejsów</a>
+    </div>    
+</body>
+</html>

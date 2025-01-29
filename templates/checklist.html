@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Kontrolna</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Lista Kontrolna</h1>
+    <form method="POST">
+        {% for item in checklist %}
+        <label>
+            <input type="checkbox" name="{{ item.item }}" {% if item.status %}checked{% endif %}>
+            {{ item.item }}
+        </label><br>
+        {% endfor %}
+        <input type="submit" value="Zapisz">
+    </form>
+    <a href="/">Powrót do listy rejsów</a>
+</body>
+</html>

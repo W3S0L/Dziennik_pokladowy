@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edytuj listę pasażerów</title>
+    <link rel="stylesheet" href="/static/styles.css">
+
+    <script>
+        function addPassengerField() {
+            // Znajdź kontener na listę pasażerów
+            const container = document.getElementById('passenger-list');
+            // Utwórz nowy wiersz dla pasażera
+            const passengerRow = document.createElement('div');
+            passengerRow.classList.add('passenger-row');
+            passengerRow.innerHTML = `
+                <input type="text" name="passenger_name" placeholder="Imię pasażera" required>
+                <input type="number" name="passenger_age" placeholder="Wiek pasażera" min="0" required>
+                <button type="button" class="button delete" onclick="removePassengerField(this)">Usuń</button>
+            `;
+            container.appendChild(passengerRow);
+        }
+
+        function removePassengerField(button) {
+            // Usuń wiersz, w którym znajduje się kliknięty przycisk
+            button.parentElement.remove();
+        }
+    </script>
+</head>
+<body>
+    <h1>Edytuj listę pasażerów</h1>
+    <form method="POST">
+        <div id="passenger-list">
+            <!-- Istniejący pasażerowie -->
+            {% for passenger in journey.passengers %}
+            <div class="passenger-row">
+                <input type="text" name="passenger_name" value="{{ passenger.name }}" placeholder="Imię pasażera" required>
+                <input type="number" name="passenger_age" value="{{ passenger.age }}" placeholder="Wiek pasażera" min="0" required>
+                <button type="button" class="button delete" onclick="removePassengerField(this)">Usuń</button>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" class="button add" onclick="addPassengerField()">Dodaj pasażera</button>
+        <br><br>
+        <button type="submit" class="button save">Zapisz</button>
+    </form>
+    <br>
+    <a href="{{ url_for('home') }}">Powrót do listy rejsów</a>
+</body>
+</html>
+
